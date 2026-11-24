@@ -1,0 +1,15 @@
+# Goal
+float64 target_x
+float64 target_y
+float32 velocidad_crucero
+---
+# Result
+bool exito
+float32 tiempo_total
+int32 anomalias_detectadas
+string resumen
+---
+# Feedback
+float32 distancia_restante
+float32 porcentaje_avance
+string estado_actual

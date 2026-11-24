@@ -1,0 +1,34 @@
+control_traccion:
+  ros__parameters:
+    # Dimensiones físicas (metros)
+    wheel_radius: 0.15
+    wheel_base: 0.65
+    track_width: 0.55
+
+    # Límites cinemáticos
+    max_linear_vel: 1.0        # m/s
+    max_angular_vel: 1.2       # rad/s
+    max_linear_accel: 0.5      # m/s^2
+    max_angular_accel: 0.8     # rad/s^2
+    velocidad_crucero: 0.5     # m/s
+    tiempo_inspeccion: 5       # s
+
+    # Perfil de terreno inicial ("seco", "lodo", "irregular")
+    tipo_terreno: "seco"
+
+    # Ganancias del controlador PID
+    kp_linear: 1.2
+    ki_linear: 0.05
+    kd_linear: 0.1
+    kp_angular: 1.8
+    ki_angular: 0.02
+    kd_angular: 0.15
+
+navegacion_action_server:
+  ros__parameters:
+    default_cruise_vel: 0.5    # m/s
+    max_linear_vel: 1.0        # m/s
+    max_angular_vel: 1.2       # rad/s
+    goal_tolerance: 0.15       # m
+    max_recovery_attempts: 3
+    control_rate_hz: 10.0      # Hz

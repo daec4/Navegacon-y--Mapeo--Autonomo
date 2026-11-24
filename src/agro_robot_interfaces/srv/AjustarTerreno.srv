@@ -1,0 +1,5 @@
+# Perfil de terreno agrícola: "seco", "lodo", "irregular"
+string tipo_terreno
+---
+bool exito
+string mensaje

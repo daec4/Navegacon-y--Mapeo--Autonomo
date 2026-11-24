@@ -4,13 +4,16 @@
   <name>agro_robot</name>
   <version>0.1.0</version>
   <description>Nodos y tópicos de un robot móvil para control de plagas en banano y cacao</description>
-  <maintainer email="juan@todo.todo">Juan Cruz</maintainer>
+  <maintainer email="juancruz@espol.edu.ec">Juan Cruz</maintainer>
+  <maintainer email="daescarr@espol.edu.ec">Daniel Espinoza</maintainer>
+  <maintainer email="byalort@espol.edu.ec">Byron Ortega</maintainer>
   <license>Apache-2.0</license>
 
   <exec_depend>rclpy</exec_depend>
   <exec_depend>std_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>agro_robot_interfaces</exec_depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
 
