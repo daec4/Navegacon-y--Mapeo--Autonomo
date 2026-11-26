@@ -1,19 +1,8 @@
-"""
-Nodo de percepción visual.
-
-PUBLICA
-  /percepcion/imagen     sensor_msgs/Image   QoS Best-Effort, 15 Hz (flujo de cámara)
-  /percepcion/anomalia   std_msgs/String     descripción de la anomalía foliar detectada
-
-Para probar, la anomalía se publica directamente desde la terminal en
-/percepcion/anomalia. Si más adelante hay un detector, este nodo la publicará
-llamando a `reportar_anomalia()`.
-"""
 import rclpy
 from rclpy.node import Node
 from rclpy.qos import QoSProfile, ReliabilityPolicy, HistoryPolicy, DurabilityPolicy
 from sensor_msgs.msg import Image
-from std_msgs.msg import String
+from agro_robot_interfaces.msg import AnomaliaFoliar
 
 FRECUENCIA_HZ = 15.0
 ANCHO, ALTO = 160, 120
@@ -30,11 +19,9 @@ class PercepcionNode(Node):
             durability=DurabilityPolicy.VOLATILE,
         )
 
-        # Publicadores
         self.pub_imagen = self.create_publisher(Image, '/percepcion/imagen', qos_imagen)
-        self.pub_anomalia = self.create_publisher(String, '/percepcion/anomalia', 10)
+        self.pub_anomalia = self.create_publisher(AnomaliaFoliar, '/percepcion/anomalia', 10)
 
-        # Imagen de relleno
         self.pixeles = bytes([40, 140, 40]) * (ANCHO * ALTO)
         self.create_timer(1.0 / FRECUENCIA_HZ, self.cb_camara)
         self.get_logger().info(f'Percepción publicando imágenes a {FRECUENCIA_HZ:.0f} Hz (Best-Effort)')
@@ -49,9 +36,14 @@ class PercepcionNode(Node):
         msg.data = self.pixeles
         self.pub_imagen.publish(msg)
 
-    def reportar_anomalia(self, descripcion):
-        self.pub_anomalia.publish(String(data=descripcion))
-        self.get_logger().warn(f'Anomalía detectada: {descripcion}')
+    def reportar_anomalia(self, tipo_plaga, confianza, x, y, obstaculo=False):
+        msg = AnomaliaFoliar()
+        msg.tipo_plaga = tipo_plaga
+        msg.confianza = float(confianza)
+        msg.x, msg.y = float(x), float(y)
+        msg.obstaculo_detectado = obstaculo
+        self.pub_anomalia.publish(msg)
+        self.get_logger().warn(f'Anomalía detectada: {tipo_plaga} ({confianza * 100:.0f} %) en ({x}, {y})')
 
 
 def main(args=None):

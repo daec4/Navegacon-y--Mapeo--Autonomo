@@ -5,3 +5,10 @@ __pycache__/
 *.pyc
 .vscode/
 .vscode/
+.vscode/
+build/
+install/
+log/
+__pycache__/
+*.pyc
+*.zip
